@@ -1,0 +1,42 @@
+Online cake store
+
+PRODUCT
+Product info - size, weight etc
+Manufacture
+Product ID
+Origin
+Price
+Age of product
+Supplier
+
+CUSTOMER
+Name
+Age 
+Address
+Payment details
+Delivery address
+User info
+Previous orders
+
+
+ORDER/SALES
+Quantity
+Orders
+Previous Orders
+Date of order
+
+
+
+In the database
+Customer Table
+Name: XXX
+Address: XXX
+Delivery address: XXX
+
+Product Table
+Name: camera
+Price: XXX
+
+Order Table
+'CUST' 1 x Camera @ £XXX
+

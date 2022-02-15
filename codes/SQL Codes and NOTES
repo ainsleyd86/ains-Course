@@ -1,0 +1,218 @@
+Terminal command to clone
+-Make local repo on ur machine
+-terminal: git init
+-clone: git clone git@github.com:kiran-evans/qa-sql-git.git
+
+
+MERGE
+git checkout dev ----move to dev branch from your unique branch
+git merge 'yourName' ----command to merge your unique branch to the dev branch
+git commit -m "XY: Merged yourName into dev" -----commit changes made
+git push -u origin dev -----push changes up to dev branch (will get a merge conflict that has to be resolved)
+
+
+
+CREATE TABLE cake(
+cake_id INT AUTO_INCREMENT, 
+PRIMARY KEY (cake_id),
+type_of_cake VARCHAR(30) DEFAULT 'vanilla',
+size TINYINT NOT NULL, 
+decorated BOOLEAN NOT NULL,
+type_of_filling VARCHAR(20)
+);
+
+DESCRIBE cust_refunds
+
+CREATE TABLE customers (
+customer_id INT AUTO_INCREMENT,
+PRIMARY KEY (customer_id),
+email VARCHAR(40) UNIQUE,
+name VARCHAR(30),
+address VARCHAR(60),
+new_customer BOOLEAN,
+cust_phone_number VARCHAR(20)
+credit_card_details BIGINT NOT NULL,
+debit_card_details BIGINT NOT NULL,
+
+
+CREATE TABLE orders_made (
+order_id INT AUTO_INCREMENT PRIMARY KEY,
+cake_id INT,
+FOREIGN KEY (cake_id) REFERENCES cake(cake_id),
+customer_id INT,
+FOREIGN KEY (customer_id) REFERENCES customers(customer_ID)
+);
+
+CREATE TABLE cust_refunds (
+refund_id INT AUTO_INCREMENT PRIMARY KEY,
+order_id INT,
+FOREIGN KEY (order_id) REFERENCES orders_made(order_id),
+customer_id INT,
+FOREIGN KEY (customer_id) REFERENCES customers(customer_ID)
+purchase_date DATE NOT NULL,
+reason_for_refund VARCHAR(200) NOT NULL
+);
+
+Inserting data into the tables made
+INSERT INTO cake (type_of_cake, size, decorated, type_of_filling)
+VALUES ('lemon1 carrot1 red velvet1', 35, false, 'chocolate marzipan');
+
+INSERT INTO <cake> (type_of_cake, size, decorated, type_of_filling)
+VALUES ('vanilla_sponge eggless chocolate_sponge, 10 15 20, true, 'raspberry jam chocolate lemon_frosting'),----------{adding multiple lines of text by adding a comma after the final bracket}
+
+SELECT * FROM cake
+View all fields FROM cake
+
+INSERT INTO customers (name, email, new_customer)
+VALUES ('Ainsley', 'ainsley@gmail.com', true);
+
+SELECT * FROM customers------<field name>
+
+INSERT INTO orders (customer_id, pizza_id)
+VALUES (1,1)
+SELECT * FROM orders
+
+Deleting data from database
+DELETE FROM <table name> ---deletes everything 
+DELETE FROM cake WHERE field is = VALUE ------ direct deleting
+	eg DELETE FROM cake WHERE size = 35;
+
+Specific selecting from database tables
+I want to see a film called shock cabin
+SELECT * FROM film WHERE title = 'Shock Cabin";
+
+Pattern matching looks for data that matches a pattern - lets us use wildcards
+
+Every film with cabin in the title
+SELECT * FROM film WHERE title LIKE '%Cabin%';
+	--- % = characters before or after
+
+View film where length is less than 90
+SELECT * FROM film WHERE length <90;
+
+View film where length is less than or equal to 90
+SELECT * FROM film WHERE length <=90;
+
+View film where length is less between 100 and 110
+SELECT * FROM film WHERE length> 100 AND length <110;
+
+Ordering data - is set as ascending by default
+	--ascending/descending (ASC/DESC)
+SELECT title, rating, description, length FROM film ORDER BY title DESC
+
+
+Every film in the database with the word SHREK longer than 110 shown in descending order
+
+Select title, rating length description FROM film WHERE title LIKE '%shrek%' AND length >110 ORDER by title DESC;
+
+Grabbing unique values
+Shows the first one
+Won't work if using DISTINCT <field>,regular <field> FROM <field>
+	SELECT DISTINCT rating, DISTINCT title FROM film;
+
+Only works singularly
+	SELECT DISTINCT rating FROM file
+
+
+ALIASING - AS
+Get rental price by adding rental rate and rental cost together
+	SELECT title, rental price = replacement cost AS rental price FROM film
+
+Aggregate functions
+ 	-functions/queries that combine multiple records/values into one
+
+COUNT -  counts values, returns numbers 
+(returns number of records that match)
+	SELCT * FROM film;
+		((--SELECT COUNT (field name) FROM table))
+	SELECT COUNT (title) FROM film;
+	SELECT COUNT (title) FROM film WHERE length >90;
+	SELECT COUNT (title) FROM film WHERE description LIKE '%shrek%';
+
+	HAVING COUNT(FIELD) = 1; ---SHOWS RESULTS WITH A COUNT OF JUST ONE (CAN USE </> ALSO)
+SUM _ work out the total of the field
+	SELECT SUM (population) FROM city;
+	SELECT SUM (population) FROM city WHERE CountryCode LIKE 'AUS';
+	SELECT SUM (population) FROM city WHERE CountryCode != 'ESP'; (( ! = means don't include))
+		-the sum of the population of city not in ESP (world database)
+
+MIN/MAX - returns the MIN or MAX value
+AVG - returns the average
+	SELECT MIN (population) FROM city;
+	SELECT MAX (population) FROM city;
+	SELECT AVG (population) FROM city;
+	SELECT MIN (population) FROM city WHERE population > 8000;
+If asking for more info , it grabs first ID and first Name when doing SELECT * and puts in front. Doesn't take into consideration the command set eg, AVG, MIN etc	
+	SELECT ID, Name, MIN (population) FROM city WHERE population > 8000;
+
+
+GROUP BY - used with aggregate functions to separate functions into their group
+	- allows us to see the max population per contrycode, rather than max population for entire table 
+	SELECT CountryCode, MAX(population) FROM city GROUP BY CountryCode;
+	SELECT CountryCode, MAX(population) FROM city WHERE population BETWEEN 4000 AND 40000 GROUP BY CountryCode;
+
+
+-----SELECT * FROM country;
+------Exercises
+	- Find the average SurfaceArea of all countries - SELECT AVG (SurfaceArea) FROM country;
+	- Max Life Expectancy - SELECT MAX(LifeExpectancy) FROM country;
+	- Min GNP - SELECT MIN(GNP) FROM country;
+	- SUM of Population from all countries
+	- Count the names with indepedent year not being null
+
+	SELECT AVG (SurfaceArea) FROM country;
+	SELECT MIN(GNP) FROM country;
+	SELECT SUM(population) FROM country;
+	SELECT AVG(SurfaceArea), Region FROM country GROUP BY Region;
+	!= "NULL" 
+
+
+
+
+Nested Queries - queries that use results of other queries to query the data
+	using an aggregate function to give a value (min population) using the value to get the name of it
+Nested queries can only work if the original only returns ONE THING
+
+	Get the name of the country with the smallest surface area
+		1) get the country with the smallest surface area
+			SELECT MIN(SurfaceArea) FROM country
+		2) get the name of this country
+			SELECT Name, SurfaceArea FROm country WHERE SurfaceArea = x
+			SELECT Name, SurfaceArea FROm country WHERE SurfaceArea = (SELECT 		MIN(SurfaceArea) FROM country
+
+Generally used to query info you don't know
+
+	Get all the details of the country with the highest population 
+		1) highest population 
+		2) All of the details 	
+			SELECT * FROM country WHERE population = (SELECT MAX(population) FROM county);
+
+	
+-------Question: Get the Name, Continent, Region, life expectancy of the country with the highest life expectancy under 75-----
+
+	1)Highest life expectancy under 75
+	2)Name continent region life expect of country
+SELECT Name, Continent, Region, LifeExpectancy FROM country WHERE LifeExpectancy = (SELECT MAX(LifeExpectancy) FROM country WHERE LifeExpectancy <75); -------------------------------
+
+
+
+JOINS
+Joins allow us to combine data from two different tables and bring both sets of data together
+GENERALLY you use primary of foreign keys to connect your data
+There are different types of joins you can use, inner, outer, right and left. 
+	We're only gan use inner as it is the default (and most useful)
+
+INSERT INTO orders (customer_id, pizza_id) VALUES (1,8),(2,12)
+
+WITH the CakeShop Demo, Orders is the middle man (uses pizza_id in both)
+	SELECT * FROM primary_table JOIN secondary_table ON primary_table.primary_key = secondary_table.foreign_key
+
+SELECT * FROM pizzas JOIN orders ON pizzas.pizza_id = orders.pizza_id
+
+
+
+
+
+
+
+
