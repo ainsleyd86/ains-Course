@@ -1,0 +1,38 @@
+public class App {
+    public static void main(String[] args) throws Exception {
+        System.out.println("Hello, World!");
+    }
+}
+
+
+
+package com.DFSEW11;
+
+public class Main {
+
+    public static void main(String[] args) {
+        byte myAge = 30;
+        long viewsCount = 3_123_456_789L; 
+        // L at the end coz it says int to big (3bn)
+        float price = 10.99F;
+        // F at end coz java reads it as a double not a float. F determines it
+        char letter = 'A';
+        boolean isEligible = false
+
+
+package com.DFSEW11;
+
+import java.util.Date;
+
+public class Main {
+
+    public static void main(String[] args) {
+        byte agw = 30;
+        Date now = new Date ();
+        System.out.println(now);
+//SOUT tab gives syatem out command
+    }
+}
+
+Primitive type for storing values
+Reference type for storing complex objects
