@@ -34,4 +34,3 @@ public class Partay {
     }
 }
 
-//https://www.youtube.com/watch?v=jK6NX9iyi-8&list=PL59LTecnGM1NRUyune3SxzZlYpZezK-oQ&index=6
