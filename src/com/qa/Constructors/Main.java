@@ -8,14 +8,7 @@ public class Main {
         System.out.println(s.colour);
         System.out.println(s.size);
 
-//https://www.youtube.com/watch?v=G1Iln3PSrUg
-
-
-
-
-
-
-    }
+}
 
 
 }
